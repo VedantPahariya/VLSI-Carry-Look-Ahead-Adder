@@ -1,0 +1,133 @@
+* Fastest D-Flip Flop with Least no. of Transistors and Least Delay
+* Used TSPC topology for flip flop
+* Changing Width of Pmos in Low Level Latch doesn't have much affect in the delay
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.param width_N= {10*LAMBDA}
+.param width_P= {2*width_N}
+.global gnd vdd
+Vdd vdd gnd 'SUPPLY'
+
+* inverter
+.subckt inv y x vdd gnd
+    M1 y x gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M2 y x vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+.subckt inverter y x vdd gnd
+    .param width_N= {10*LAMBDA}
+    .param width_P= {2*width_N}
+
+    M1 y x gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M2 y x vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inverter
+
+* Low Level Latch (pmos should be 4w and nmos w)
+.subckt low_latch D Q clk vdd gnd
+    * Pmos with D input connected to gate
+    *Drain Gate Source
+    M1 C D vdd vdd CMOSP W={2*width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Pmos with clock input connected to gate
+    M2 Q clk C vdd CMOSP W={2*width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Nmos with D input connected to gate
+    M3 Q D gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * Note: This is just the one component of the Low Level Latch, same component will repeat twice to make the complete Low Level Latch
+.ends latch
+
+* High Level Latch (every transistor is 2W)
+.subckt high_latch D Q clk vdd gnd
+    * Pmos with D input connected to gate
+    M1 Q D vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Nmos with clock input connected to gate
+    M2 Q clk C gnd CMOSN W={2*width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * Nmos with D input connected to gate
+    M3 C D gnd gnd CMOSN W={2*width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * Note: This is just the one component of the High Level Latch, same component will repeat twice to make the complete High Level Latch
+.ends latch
+
+.subckt Dflip Q D clk vdd gnd
+    * Complete Low Level Latch
+    x1 D B clk vdd gnd low_latch
+    x2 B com clk vdd gnd low_latch
+
+    * Complete High Level Latch
+    x3 com A clk vdd gnd high_latch
+    x4 A Q clk vdd gnd high_latch
+
+    * Repeater at the output
+    * x5 Qbar nt clk vdd gnd inv
+    * x6 Q Qbar clk vdd gnd inv
+
+    * one at mid and one at output
+    * x5 temp com clk vdd gnd inv
+    * x6 Q nt clk vdd gnd inv
+    * just replace temp with com to convert into inverters at output
+
+    * Output Load
+    x7 tem1 Q vdd gnd inverter
+    * x8 tem1 Q vdd gnd inv
+.ends
+
+X1 Q D clk vdd gnd Dflip
+
+* Clock Pulse
+vclk clk gnd pulse 0 1.8 0ns 50ps 50ps 1ns 2ns
+
+* Input Pulse D
+vin D gnd pulse 0 1.8 0.2ns 50ps 50ps 2ns 4ns
+* initial voltage, peak volt, delay, rise time, fall time, pulse width, period
+
+.tran 0.01ns 10ns
+
+.measure tran rise_delay
++ TRIG v(clk) VAL='SUPPLY/2' RISE=2
++ TARG v(Q) VAL='SUPPLY/2' RISE=1
+
+.measure tran fall_delay
++ TRIG v(clk) VAL='SUPPLY/2' RISE=3
++ TARG v(Q) VAL='SUPPLY/2' FALL=1
+
+.measure tran tpd3 param='(rise_delay + fall_delay)/2'
+
+.measure tran 
+.control
+set color0= black
+set color1= white
+set color2= red
+set color3= magenta
+set color4= green
+set xbrushwidth=3
+
+run
+plot v(clk)+6 v(D)+3 v(Q) title "Output Q"
+.endc
+

@@ -1,0 +1,59 @@
+.subckt low_latch D Q clk 
+    * Pmos with D input connected to gate
+    *Drain Gate Source
+    M1 C D vdd vdd CMOSP W={2*width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Pmos with clock input connected to gate
+    M2 Q clk C vdd CMOSP W={2*width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Nmos with D input connected to gate
+    M3 Q D gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * Note: This is just the one component of the Low Level Latch, same component will repeat twice to make the complete Low Level Latch
+.ends latch
+
+.subckt high_latch D Q clk
+    * Pmos with D input connected to gate
+    M1 Q D vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Nmos with clock input connected to gate
+    M2 Q clk C gnd CMOSN W={2*width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * Nmos with D input connected to gate
+    M3 C D gnd gnd CMOSN W={2*width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * Note: This is just the one component of the High Level Latch, same component will repeat twice to make the complete High Level Latch
+.ends latch
+
+.subckt Dflip Q D clk
+    .param width_N= {10*LAMBDA}
+    .param width_P= {2*width_N}
+    * Complete Low Level Latch
+    x1 D B clk vdd gnd low_latch
+    x2 B com clk vdd gnd low_latch
+
+    * Complete High Level Latch
+    x3 com A clk vdd gnd high_latch
+    x4 A Q clk vdd gnd high_latch
+
+    * Repeater at the output
+    * x5 Qbar nt clk vdd gnd inv
+    * x6 Q Qbar clk vdd gnd inv
+
+    * one at mid and one at output
+    * x5 temp com clk vdd gnd inv
+    * x6 Q nt clk vdd gnd inv
+    * just replace temp with com to convert into inverters at output
+.ends

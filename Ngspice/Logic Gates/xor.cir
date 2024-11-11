@@ -1,0 +1,108 @@
+* XOR gate using nmos and pmos
+* There are three implementations of XOR gate possible as follows:
+* 1. Using CMOS logic styles
+* 2. Using Pass transistor logic
+* 3. Using Transmission gate logic
+
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.global gnd vdd
+Vdd vdd gnd 'SUPPLY'
+
+* inverter
+.subckt inv y x vdd gnd
+    M1 y x gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M2 y x vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+.subckt XORpass out A B vdd gnd 
+    * Circuit diagram link: https://www.researchgate.net/figure/mplementation-of-XOR-gate-with-four-transistors_fig3_304142640
+    X1 Abar A vdd gnd inv
+    .param width_N= {20*LAMBDA}
+    .param width_P= {2*width_N}
+
+    M1 out B A vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B Abar gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M3 out A B vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M4 B Abar out gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends XORpass
+
+.subckt XORcmos out A B vdd gnd 
+    * Circuit diagram link: https://electronics.stackexchange.com/questions/572596/any-significant-differen-in-these-cmos-xor-gates
+    * 2nd topology is the better than one in the above link
+    .param width_N={2*20*LAMBDA} 
+    .param width_P={2*width_N}
+    * Pull up network
+    X1 Abar A vdd gnd inv
+    X2 Bbar B vdd gnd inv
+
+    M1 t1 A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out Bbar t1 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 t2 Abar vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M4 out B t2 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Pull down network
+    M5 out Abar t3 gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M6 t3 Bbar gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M7 out A t4 gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M8 t4 B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends XORcmos
+
+.tran 10ps 16ns
+
+* V1 A 0 PULSE(0 1.8 0 10ps 10ps 9.98ns 20ns)
+* V2 B 0 PULSE(0 1.8 6ns 10ps 10ps 8ns 15ns)
+V1 A gnd pulse(0 1.8 0 1ps 1ps 1.5ns 3ns)
+V2 B gnd pulse(0 1.8 6ns 1ps 1ps 2.5ns 5ns)
+X1 out A B vdd gnd XORpass
+
+.control
+set color0= black
+set color1= white
+set color2= red
+set color3= magenta
+set color4= green
+set xbrushwidth=3
+
+run
+plot out A+3 B+6 
+.endc

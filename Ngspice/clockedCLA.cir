@@ -1,0 +1,338 @@
+* Generation of Pi and Gi for all inputs
+.include TSMC_180nm.txt
+.include Dflip.sub
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+* .param width_N= {20*LAMBDA}
+* .param width_P= {2*width_N}
+.param scalen=0.5
+.param scalep=0.5
+.global gnd vdd
+Vdd vdd gnd 'SUPPLY'
+
+.subckt inv y x 
+    .param width_N= {scalen*20*LAMBDA}
+    .param width_P= {scalep*40*LAMBDA}
+    M1 y x gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M2 y x vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+.subckt NORlar out A B
+    .param width_N={scalen*80*LAMBDA}
+    .param width_P={scalep*160*LAMBDA}
+
+    M1 t1 A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B t1 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 out A gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M4 out B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends NORlar
+
+.subckt NOR out A B
+    .param width_N={scalen*40*LAMBDA}
+    .param width_P={scalep*80*LAMBDA}
+
+    M1 t1 A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B t1 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 out A gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M4 out B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends NOR
+
+.subckt NORsma out A B
+    .param width_N={scalen*20*LAMBDA}
+    .param width_P={scalep*40*LAMBDA}
+
+    M1 t1 A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B t1 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 out A gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M4 out B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends NORsma
+
+.subckt OR out A B
+    X1 t1 A B NOR
+    X2 out t1 inv
+.ends
+
+.subckt NANDlar out A B
+    .param width_N={scalen*80*LAMBDA}
+    .param width_P={scalep*80*LAMBDA}
+
+    M1 out A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 out A t2 gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M4 t2 B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends NANDlar
+
+.subckt NAND out A B
+    .param width_N={scalen*40*LAMBDA}
+    .param width_P={scalep*40*LAMBDA}
+
+    M1 out A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 out A t2 gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M4 t2 B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends NAND
+
+.subckt AND out A B
+    X1 t1 A B NAND
+    X2 out t1 inv
+.ends
+
+.subckt XORcmos out A B
+    * Circuit diagram link: https://electronics.stackexchange.com/questions/572596/any-significant-differen-in-these-cmos-xor-gates
+    * 2nd topology is the better than one in the above link
+    .param width_N={scalen*2*20*LAMBDA} 
+    .param width_P={2*2*20*LAMBDA}
+    * Pull up network
+    X1 Abar A inv
+    X2 Bbar B inv
+
+    M1 t1 A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out Bbar t1 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 t2 Abar vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M4 out B t2 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    * Pull down network
+    M5 out Abar t3 gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M6 t3 Bbar gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M7 out A t4 gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M8 t4 B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends XORcmos
+
+.subckt XORpass out A B
+    * Circuit diagram linl:https://www.researchgate.net/figure/mplementation-of-XOR-gate-with-four-transistors_fig3_304142640
+    X1 Abar A inv
+    .param width_N= {scalen*10*LAMBDA}
+    .param width_P= {scalep*40*LAMBDA}
+
+    M1 out B A vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B Abar gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M3 out A B vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M4 B Abar out gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends XORpass
+
+* Propagate and Generate Block (Gi' & Pi')
+.subckt progen Ai Bi Gi Pti Pi
+    X1 Pti Ai Bi NORlar
+    X2 Gi Ai Bi NANDlar
+    X3 Pi Ai Bi XORpass
+.ends progen
+
+* (Gi'(Pi'+ G(i-1)'))' && (Pi'+ P(i-1)')'
+.subckt inter Gi Pti Gi_1 Pti_1 Pij GPG
+    X1 Pij Pti Pti_1 NOR
+    * X2 t1 Pti Gi_1 OR
+    * X3 GPG Gi t1 NAND
+    X2 t1 Pti Gi_1 NORsma
+    X3 t2 t1 inv
+    X4 GPG Gi t2 NAND
+.ends inter
+
+* For C2 and C3
+.subckt AndOr Pij GPG C Cout
+    X1 t1 Pij C AND
+    X2 t2 GPG t1 NORsma
+    X3 Cout t2 inv
+    * X2 Cout GPG t1 OR
+.ends AndOr
+
+* Inputs to Flipflop
+X100 a_0 A0 clk Dflip
+X101 a_1 A1 clk Dflip
+X102 a_2 A2 clk Dflip
+X103 a_3 A3 clk Dflip
+
+X104 b_0 B0 clk Dflip
+X105 b_1 B1 clk Dflip
+X106 b_2 B2 clk Dflip
+X107 b_3 B3 clk Dflip
+
+X0 a_0 b_0 G0 Pt0 P0 progen
+X1 a_1 b_1 G1 Pt1 P1 progen
+X2 a_2 b_2 G2 Pt2 P2 progen
+X3 a_3 b_3 G3 Pt3 P3 progen
+
+* Need to check the X4 (no use of Pt0 and Puseless) (GPG0 is C1)
+* X4 G0 Pt0 Cinbar Pt0 Puseless C1 inter
+X4 titu Cinbar pt0 OR
+X51 C1 titu G0 NAND
+X5 G1 Pt1 G0 Pt0 P10 GPG1 inter
+X6 G2 Pt2 G1 Pt1 P21 GPG2 inter
+X7 G3 Pt3 G2 Pt2 P32 GPG3 inter
+
+* Notation: Pij = (Pti + Ptj)'
+*           GPGi = (Gi(Pti+ G(i-1)))'
+* Pti are the complements
+
+* C2 and C3
+X8 P10 GPG1 Cin C2 AndOr
+X9 P21 GPG2 C1 C3 AndOr
+
+* inverting Cin
+X10 Cinbar Cin inv
+
+* Calculating Sum
+X11 s_0 Cin P0 XORpass
+X12 s_1 C1 P1 XORpass
+X13 s_2 C2 P2 XORpass
+X14 s_3 C3 P3 XORpass
+
+* Calculating Gout 
+X15 temp1 P32 GPG1 AND
+X16 Gout temp1 GPG3 NOR
+* Calculating Pout
+X17 Pout P32 P10 NAND 
+
+* Calculating Cout
+X18 temp2 Pout Cinbar OR
+X19 C4 temp2 Gout NAND
+
+* Output to Flipflop
+X20 S0 s_0 clk Dflip
+X21 S1 s_1 clk Dflip
+X22 S2 s_2 clk Dflip
+X23 S3 s_3 clk Dflip
+X24 Cout C4 clk Dflip
+
+.tran 0.1ns 20ns
+
+V1 A0 gnd 'SUPPLY'
+V2 A1 gnd 0
+V3 A2 gnd 'SUPPLY'
+V4 A3 gnd 0
+* V4 A3 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
+
+.param time = 10ns
+* V5 B0 gnd PULSE 0 'SUPPLY' 0ns 50ps 50ps 'time' '2*time'
+V5 B0 gnd 'SUPPLY'
+* V6 B1 gnd 'SUPPLY'
+V6 B1 gnd 0
+V7 B2 gnd 'SUPPLY'
+* V7 B2 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
+V8 B3 gnd 0
+
+V9 Cin gnd 'SUPPLY'
+V10 clk gnd PULSE 0 'SUPPLY' 5n 50ps 50ps 'time/2' 'time'
+
+
+.measure tran S0_val FIND v(S0) AT=16n
+.measure tran S1_val FIND v(S1) AT=16n 
+.measure tran S2_val FIND v(S2) AT=16n
+.measure tran S3_val FIND v(S3) AT=16n
+.measure tran C4_val FIND v(Cout) AT=16n
+ 
+* .measure tran rise_delay
+* + TRIG v(clk) VAL='SUPPLY/2' RISE=2
+* + TARG v(S3) VAL='SUPPLY/2' FALL=1
+
+* .measure tran fall_delay
+* + TRIG v(clk) VAL='SUPPLY/2' RISE=3
+* + TARG v(S3) VAL='SUPPLY/2' RISE=1
+
+* .measure tran tpd param='(rise_delay + fall_delay)/2'
+
+.control
+set color0= white
+set color1= black
+set color2= red
+set color3= blue
+set color4= magenta
+set xbrushwidth=3
+
+run
+* plot V(clk)+6 V(B0)+3 V(S3)
+* plot V(clk)
+* plot V(clk)+28 V(A3)+26 V(A2)+24 V(A1)+22 V(A0)+20 V(B3)+18 V(B2)+16 V(B1)+14 V(B0)+12 V(Cin)+10 V(Cout)+8 V(S3)+6 V(S2)+4 V(S1)+2 V(S0) 
+.endc

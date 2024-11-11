@@ -1,0 +1,55 @@
+* NOR gate using nmos and pmos
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.param LAMBDA=0.09u
+.param width_N= {20*LAMBDA}
+.param width_P= {2*width_N}
+.global gnd vdd
+Vdd vdd gnd 'SUPPLY'
+
+* inverter
+.subckt inv y x vdd gnd
+    M1 y x gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M2 y x vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends inv
+
+.subckt NOR out A B vdd gnd
+    M1 t1 A vdd vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M2 out B t1 vdd CMOSP W={width_P} L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
+    + AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M3 out A gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    M4 out B gnd gnd CMOSN W={width_N} L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N}
+    + AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends
+
+.tran 1ns 100ns
+
+V1 A 0 PULSE(0 1.8 0 10ps 10ps 9.98ns 20ns)
+V2 B 0 PULSE(0 1.8 6ns 10ps 10ps 8ns 15ns)
+X1 out A B vdd gnd NOR
+
+.control
+set color0= black
+set color1= white
+set color2= red
+set color3= magenta
+set color4= green
+set xbrushwidth=3
+
+run
+plot out A+3 B+6 
+.endc
