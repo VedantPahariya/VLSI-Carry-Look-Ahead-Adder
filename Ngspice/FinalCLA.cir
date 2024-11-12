@@ -180,8 +180,8 @@ Vdd vdd gnd 'SUPPLY'
 .subckt XORpass out A B
     * Circuit diagram linl:https://www.researchgate.net/figure/mplementation-of-XOR-gate-with-four-transistors_fig3_304142640
     X1 Abar A inv
-    .param width_N= {scalen*10*LAMBDA}
-    .param width_P= {scalep*40*LAMBDA}
+    .param width_N= {0.5*8*LAMBDA}
+    .param width_P= {0.5*16*LAMBDA}
 
     M1 out B A vdd CMOSP W={width_P} L={2*LAMBDA}
     + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P}
@@ -209,7 +209,7 @@ Vdd vdd gnd 'SUPPLY'
 
 * (Gi'(Pi'+ G(i-1)'))' && (Pi'+ P(i-1)')'
 .subckt inter Gi Pti Gi_1 Pti_1 Pij GPG
-    X1 Pij Pti Pti_1 NOR
+    X1 Pij Pti Pti_1 NORsma
     * X2 t1 Pti Gi_1 OR
     * X3 GPG Gi t1 NAND
     X2 t1 Pti Gi_1 NORsma
