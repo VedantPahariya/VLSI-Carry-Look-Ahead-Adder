@@ -1,0 +1,66 @@
+* SPICE3 file created from High_Level_Latch.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_8_49# a_n16_17# gnd Gnd nfet w=20 l=2
++  ad=80 pd=48 as=350 ps=168
+M1001 a_n69_0# D gnd Gnd nfet w=11 l=2
++  ad=55 pd=32 as=0 ps=0
+M1002 a_n16_17# clk a_n16_49# Gnd nfet w=20 l=2
++  ad=120 pd=52 as=80 ps=48
+M1003 a_n16_49# a_n47_0# gnd Gnd nfet w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1004 a_n47_0# a_n69_0# gnd Gnd nfet w=11 l=2
++  ad=55 pd=32 as=0 ps=0
+M1005 Q a_n16_17# VDD w_n82_17# pfet w=20 l=2
++  ad=100 pd=50 as=600 ps=280
+M1006 a_n16_17# a_n47_0# VDD w_n82_17# pfet w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1007 a_n69_0# clk a_n69_23# w_n82_17# pfet w=40 l=2
++  ad=200 pd=90 as=160 ps=88
+M1008 a_n69_23# D VDD w_n82_17# pfet w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1009 a_n47_0# clk a_n47_23# w_n82_17# pfet w=40 l=2
++  ad=200 pd=90 as=160 ps=88
+M1010 a_n47_23# a_n69_0# VDD w_n82_17# pfet w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1011 Q clk a_8_49# Gnd nfet w=20 l=2
++  ad=120 pd=52 as=0 ps=0
+C0 a_n69_0# clk 0.03fF
+C1 a_n69_0# w_n82_17# 0.09fF
+C2 clk gnd 0.01fF
+C3 a_n16_17# clk 0.09fF
+C4 w_n82_17# gnd 0.22fF
+C5 w_n82_17# a_n16_17# 0.11fF
+C6 VDD clk 0.53fF
+C7 a_n47_0# gnd 0.07fF
+C8 w_n82_17# VDD 0.26fF
+C9 D gnd 0.02fF
+C10 a_n47_0# VDD 0.25fF
+C11 D VDD 0.05fF
+C12 Q w_n82_17# 0.03fF
+C13 w_n82_17# clk 0.13fF
+C14 a_n47_0# clk 0.09fF
+C15 D clk 0.03fF
+C16 a_n47_0# w_n82_17# 0.16fF
+C17 w_n82_17# D 0.06fF
+C18 a_n69_0# gnd 0.02fF
+C19 a_n69_0# VDD 0.05fF
+C20 poly_m1_m2 pdiff_m1_m2 0.10fF
+C21 a_n16_17# gnd 0.14fF
+C22 m2contact pdiff_m1_m2 0.10fF
+C23 a_n16_49# gnd 0.01fF
+C24 VDD gnd 0.37fF
+C25 a_n16_17# VDD 0.02fF
+C26 m2contact Gnd 0.19fF **FLOATING
+C27 pdiff_m1_m2 Gnd 0.12fF **FLOATING
+C28 poly_m1_m2 Gnd 0.19fF **FLOATING
+C29 Q Gnd 0.05fF
+C30 gnd Gnd 0.07fF
+C31 VDD Gnd 0.00fF
+C32 a_n16_17# Gnd 0.15fF
+C33 a_n47_0# Gnd 0.13fF
+C34 a_n69_0# Gnd 0.05fF
+C35 clk Gnd 0.07fF
+C36 D Gnd 0.12fF
+C37 w_n82_17# Gnd 4.29fF
