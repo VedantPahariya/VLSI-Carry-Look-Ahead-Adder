@@ -1,0 +1,42 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from NORsma.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_204_n42# A VDD w_191_n48# CMOSP w=20 l=2
++  ad=120 pd=52 as=100 ps=50
+M1001 gnd A out Gnd CMOSN w=10 l=2
++  ad=60 pd=32 as=100 ps=60
+M1002 out B a_204_n42# w_191_n48# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1003 out B gnd Gnd CMOSN w=10 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 A out 0.09fF
+C1 out B 0.22fF
+C2 A B 0.07fF
+C3 w_191_n48# VDD 0.07fF
+C4 w_191_n48# out 0.03fF
+C5 A w_191_n48# 0.12fF
+C6 w_191_n48# B 0.21fF
+C7 out gnd 0.07fF
+C8 gnd Gnd 0.07fF
+C9 out Gnd 0.05fF
+C10 VDD Gnd 0.03fF
+C11 B Gnd 0.24fF
+C12 A Gnd 0.07fF
+C13 w_191_n48# Gnd 0.90fF
+
+V1 A gnd PULSE 0 'SUPPLY' 0 50p 50p 1n 2n
+V2 B gnd PULSE 0 'SUPPLY' 0 50p 50p 2.5n 5n
+.tran 0.1n 10n
+
+.control
+run
+plot V(out)+6 V(A)+3 V(B)
+.endc

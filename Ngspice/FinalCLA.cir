@@ -178,7 +178,7 @@ Vdd vdd gnd 'SUPPLY'
 .ends XORcmos
 
 .subckt XORpass out A B
-    * Circuit diagram linl:https://www.researchgate.net/figure/mplementation-of-XOR-gate-with-four-transistors_fig3_304142640
+    * Circuit diagram linl:https://www.researchgate .net/figure/mplementation-of-XOR-gate-with-four-transistors_fig3_304142640
     X1 Abar A inv
     .param width_N= {0.5*8*LAMBDA}
     .param width_P= {0.5*16*LAMBDA}
