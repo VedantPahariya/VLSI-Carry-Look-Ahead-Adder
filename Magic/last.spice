@@ -1,0 +1,70 @@
+* SPICE3 file created from last.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_n139_n71# lastandC VDD w_n152_n77# pfet w=20 l=2
++  ad=120 pd=52 as=500 ps=250
+M1001 a_n139_n103# lastandC gnd Gnd nfet w=20 l=2
++  ad=120 pd=52 as=260 ps=142
+M1002 a_n106_n93# lastORnd a_n99_n71# w_n152_n77# pfet w=20 l=2
++  ad=100 pd=50 as=120 ps=52
+M1003 a_n106_n93# lastORnd gnd Gnd nfet w=10 l=2
++  ad=100 pd=60 as=0 ps=0
+M1004 a_n99_n71# a_n115_n93# VDD w_n152_n77# pfet w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1005 gnd a_n115_n93# a_n106_n93# Gnd nfet w=10 l=2
++  ad=0 pd=0 as=0 ps=0
+M1006 a_n115_n93# a_n139_n71# VDD w_n152_n77# pfet w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1007 a_n115_n93# a_n139_n71# gnd Gnd nfet w=10 l=2
++  ad=50 pd=30 as=0 ps=0
+M1008 out a_n106_n93# VDD w_n152_n77# pfet w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1009 a_n139_n71# lastandnr a_n139_n103# Gnd nfet w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1010 out a_n106_n93# gnd Gnd nfet w=10 l=2
++  ad=50 pd=30 as=0 ps=0
+M1011 VDD lastandnr a_n139_n71# w_n152_n77# pfet w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 a_n115_n93# VDD 0.02fF
+C1 lastandnr lastandC 0.09fF
+C2 gnd lastandnr 0.19fF
+C3 a_n115_n93# w_n152_n77# 0.14fF
+C4 lastORnd lastandnr 0.00fF
+C5 VDD w_n152_n77# 0.21fF
+C6 a_n115_n93# a_n106_n93# 0.13fF
+C7 a_n115_n93# gnd 0.02fF
+C8 a_n139_n71# lastandnr 0.06fF
+C9 lastORnd a_n115_n93# 0.14fF
+C10 VDD a_n106_n93# 0.03fF
+C11 VDD lastandC 0.02fF
+C12 lastORnd VDD 0.02fF
+C13 a_n106_n93# w_n152_n77# 0.10fF
+C14 w_n152_n77# lastandC 0.12fF
+C15 a_n115_n93# a_n139_n71# 0.04fF
+C16 lastORnd w_n152_n77# 0.35fF
+C17 gnd a_n139_n103# 0.02fF
+C18 a_n139_n71# VDD 0.02fF
+C19 out w_n152_n77# 0.02fF
+C20 gnd a_n106_n93# 0.10fF
+C21 gnd lastandC 0.06fF
+C22 lastORnd a_n106_n93# 0.23fF
+C23 lastORnd lastandC 0.00fF
+C24 lastORnd gnd 0.02fF
+C25 a_n139_n71# w_n152_n77# 0.15fF
+C26 out a_n106_n93# 0.04fF
+C27 lastandnr VDD 0.02fF
+C28 a_n139_n71# lastandC 0.04fF
+C29 a_n139_n71# gnd 0.04fF
+C30 lastandnr w_n152_n77# 0.06fF
+C31 lastORnd a_n139_n71# 0.07fF
+C32 gnd Gnd 0.18fF
+C33 out Gnd 0.03fF
+C34 VDD Gnd 0.08fF
+C35 a_n106_n93# Gnd 0.15fF
+C36 lastORnd Gnd 0.46fF
+C37 a_n115_n93# Gnd 0.09fF
+C38 a_n139_n71# Gnd 0.09fF
+C39 lastandnr Gnd 0.18fF
+C40 lastandC Gnd 0.09fF
+C41 w_n152_n77# Gnd 2.49fF

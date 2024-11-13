@@ -1,0 +1,72 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from orNand.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 gnd interORp a_n190_n63# Gnd CMOSN w=10 l=2
++  ad=210 pd=112 as=100 ps=60
+M1001 out a_n159_n63# VDD w_n196_n47# CMOSP w=20 l=2
++  ad=120 pd=52 as=400 ps=200
+M1002 a_n159_n63# a_n190_n63# VDD w_n196_n47# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1003 a_n159_n63# a_n190_n63# gnd Gnd CMOSN w=10 l=2
++  ad=50 pd=30 as=0 ps=0
+M1004 out interNAND a_n143_n73# Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=120 ps=52
+M1005 a_n190_n63# interORg a_n183_n41# w_n196_n47# CMOSP w=20 l=2
++  ad=100 pd=50 as=120 ps=52
+M1006 a_n190_n63# interORg gnd Gnd CMOSN w=10 l=2
++  ad=0 pd=0 as=0 ps=0
+M1007 VDD interNAND out w_n196_n47# CMOSP w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1008 a_n143_n73# a_n159_n63# gnd Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1009 a_n183_n41# interORp VDD w_n196_n47# CMOSP w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 gnd interORg 0.02fF
+C1 out w_n196_n47# 0.05fF
+C2 interNAND gnd 0.28fF
+C3 interORp a_n190_n63# 0.09fF
+C4 interNAND a_n159_n63# 0.09fF
+C5 VDD interORg 0.02fF
+C6 VDD interNAND 0.02fF
+C7 VDD a_n159_n63# 0.02fF
+C8 w_n196_n47# interORg 0.21fF
+C9 interNAND w_n196_n47# 0.06fF
+C10 w_n196_n47# a_n159_n63# 0.10fF
+C11 interORp gnd 0.02fF
+C12 VDD w_n196_n47# 0.17fF
+C13 gnd a_n190_n63# 0.12fF
+C14 interORp interORg 0.07fF
+C15 a_n190_n63# interORg 0.23fF
+C16 a_n159_n63# a_n190_n63# 0.04fF
+C17 interORp VDD 0.02fF
+C18 out interNAND 0.06fF
+C19 VDD a_n190_n63# 0.03fF
+C20 interORp w_n196_n47# 0.12fF
+C21 w_n196_n47# a_n190_n63# 0.10fF
+C22 gnd Gnd 0.13fF
+C23 out Gnd 0.04fF
+C24 VDD Gnd 0.07fF
+C25 interNAND Gnd 0.28fF
+C26 a_n159_n63# Gnd 0.13fF
+C27 a_n190_n63# Gnd 0.15fF
+C28 interORg Gnd 0.24fF
+C29 interORp Gnd 0.07fF
+C30 w_n196_n47# Gnd 2.15fF
+
+V1 interORp gnd PULSE 0 'SUPPLY' 0 50p 50p 1n 2n
+V2 interORg gnd PULSE 0 'SUPPLY' 0 50p 50p 2.5n 5n
+V3 interNAND gnd PULSE 0 'SUPPLY' 0 50p 50p 3.5n 7n
+.tran 0.1n 20n
+
+.control
+run
+plot V(out)+6 V(interORp)+3 V(interORg)+0 V(interNAND)-3
+.endc

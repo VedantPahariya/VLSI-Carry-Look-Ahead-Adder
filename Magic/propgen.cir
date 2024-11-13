@@ -1,0 +1,88 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from propgen.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 a_n119_170# A gnd Gnd CMOSN w=10 l=2
++  ad=70 pd=48 as=490 ps=212
+M1001 a_n119_170# B outxor Gnd CMOSN w=4 l=2
++  ad=0 pd=0 as=40 ps=36
+M1002 outnor A gnd Gnd CMOSN w=40 l=2
++  ad=400 pd=180 as=0 ps=0
+M1003 outnand B a_n144_142# Gnd CMOSN w=40 l=2
++  ad=200 pd=90 as=240 ps=92
+M1004 outxor a_n119_170# B Gnd CMOSN w=4 l=2
++  ad=0 pd=0 as=29 ps=22
+M1005 gnd B outnor Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1006 a_n144_142# A gnd Gnd CMOSN w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1007 A B outxor w_n101_158# CMOSP w=8 l=2
++  ad=40 pd=26 as=80 ps=52
+M1008 a_n119_170# A VDD w_n184_191# CMOSP w=20 l=2
++  ad=100 pd=50 as=900 ps=400
+M1009 outxor A B w_n101_158# CMOSP w=8 l=2
++  ad=0 pd=0 as=45 ps=28
+M1010 VDD A a_n171_197# w_n184_191# CMOSP w=80 l=2
++  ad=0 pd=0 as=480 ps=172
+M1011 VDD B outnand w_n184_191# CMOSP w=40 l=2
++  ad=0 pd=0 as=240 ps=92
+M1012 a_n171_197# B outnor w_n184_191# CMOSP w=80 l=2
++  ad=0 pd=0 as=400 ps=170
+M1013 outnand A VDD w_n184_191# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 A VDD 0.28fF
+C1 outnor outnand 0.03fF
+C2 B a_n119_170# 0.20fF
+C3 gnd w_n184_191# 0.03fF
+C4 gnd A 0.07fF
+C5 B outnand 0.37fF
+C6 gnd outnor 0.01fF
+C7 A w_n101_158# 0.19fF
+C8 B outxor 0.52fF
+C9 B VDD 0.06fF
+C10 A w_n184_191# 0.48fF
+C11 outxor a_n119_170# 0.12fF
+C12 gnd B 0.11fF
+C13 w_n184_191# outnor 0.03fF
+C14 A outnor 0.09fF
+C15 B w_n101_158# 0.28fF
+C16 VDD outnand 0.01fF
+C17 gnd a_n119_170# 0.28fF
+C18 B w_n184_191# 0.44fF
+C19 a_n144_142# outnand 0.02fF
+C20 B A 0.32fF
+C21 gnd outnand 0.37fF
+C22 B outnor 0.22fF
+C23 w_n184_191# a_n119_170# 0.02fF
+C24 A a_n119_170# 0.12fF
+C25 outxor w_n101_158# 0.06fF
+C26 w_n184_191# outnand 0.06fF
+C27 A outnand 0.16fF
+C28 A outxor 0.11fF
+C29 w_n184_191# VDD 0.18fF
+C30 outxor Gnd 0.08fF
+C31 gnd Gnd 0.31fF
+C32 a_n119_170# Gnd 0.19fF
+C33 outnand Gnd 0.08fF
+C34 VDD Gnd 0.17fF
+C35 outnor Gnd 0.05fF
+C36 A Gnd 0.19fF
+C37 B Gnd 0.64fF
+C38 w_n101_158# Gnd 0.82fF
+C39 w_n184_191# Gnd 5.27fF
+
+V1 A gnd PULSE 0 'SUPPLY' 0 50p 50p 1n 2n
+V2 B gnd PULSE 0 'SUPPLY' 0 50p 50p 2.5n 5n
+.tran 0.1n 10n
+
+.control
+run
+plot v(outxor)+12 V(outnand)+9 V(outnor)+6 V(A)+3 V(B)
+.endc
