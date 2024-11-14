@@ -1,6 +1,6 @@
 magic
 tech scmos
-timestamp 1731580905
+timestamp 1731578277
 << nwell >>
 rect 71 -23 95 -11
 rect 71 -31 128 -23
@@ -1994,25 +1994,28 @@ rlabel metal1 107 -204 107 -204 1 GPG1
 rlabel metal2 126 -173 126 -173 1 GPG1
 rlabel metal2 51 -283 51 -283 1 G1
 rlabel metal1 4 -272 4 -272 1 pgxor2
+rlabel metal1 101 -271 101 -271 1 VDD
 rlabel metal1 126 -169 126 -169 1 C0
 rlabel metal1 125 -202 125 -202 1 P10
+rlabel metal1 126 -311 126 -311 1 P21
+rlabel metal1 125 -278 125 -278 1 C1
+rlabel metal2 125 -282 125 -282 1 GPG2
 rlabel metal1 114 -244 114 -244 1 pgxor2
 rlabel metal2 51 -393 51 -393 1 G2
 rlabel metal1 4 -381 4 -381 1 pgxor3
+rlabel metal1 101 -380 101 -380 1 VDD
 rlabel metal1 50 -372 50 -372 1 gnd
 rlabel metal1 125 -44 125 -44 1 S0
 rlabel metal2 67 -24 67 -24 1 C0
 rlabel metal1 118 -359 118 -359 1 P32
+rlabel metal1 220 -251 220 -251 5 VDD
+rlabel metal1 266 -281 266 -281 1 S3
+rlabel metal2 216 -292 216 -292 1 pgxor3
+rlabel metal1 143 -249 143 -249 5 VDD
+rlabel metal1 181 -301 181 -301 1 gnd
 rlabel metal1 265 -172 265 -172 1 S2
 rlabel metal2 215 -184 215 -184 1 pgxor2
+rlabel metal1 220 -142 220 -142 5 VDD
 rlabel metal1 143 -140 143 -140 5 VDD
 rlabel metal1 181 -192 181 -192 1 gnd
-rlabel metal1 181 -301 181 -301 1 gnd
-rlabel metal2 216 -292 216 -292 1 pgxor3
-rlabel metal1 266 -281 266 -281 1 S3
-rlabel metal2 125 -282 125 -282 1 GPG2
-rlabel metal1 125 -278 125 -278 1 C1
-rlabel metal1 126 -311 126 -311 1 P21
-rlabel metal1 101 -380 101 -380 1 VDD
-rlabel metal1 143 -249 143 -249 5 VDD
 << end >>
