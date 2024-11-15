@@ -1,0 +1,72 @@
+* SPICE3 file created from TSPC3.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 gnd a_455_n375# a_451_n340# Gnd nfet w=20 l=2
++  ad=300 pd=160 as=80 ps=48
+M1001 a_451_n340# clk Q Gnd nfet w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1002 a_475_n340# clk a_455_n375# Gnd nfet w=20 l=2
++  ad=80 pd=48 as=100 ps=50
+M1003 VDD a_479_n375# a_455_n375# w_444_n378# pfet w=20 l=2
++  ad=600 pd=280 as=100 ps=50
+M1004 gnd D a_501_n395# Gnd nfet w=10 l=2
++  ad=0 pd=0 as=50 ps=30
+M1005 gnd a_479_n375# a_475_n340# Gnd nfet w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1006 gnd a_501_n395# a_479_n375# Gnd nfet w=10 l=2
++  ad=0 pd=0 as=50 ps=30
+M1007 a_497_n392# clk a_479_n375# w_444_n378# pfet w=40 l=2
++  ad=160 pd=88 as=200 ps=90
+M1008 VDD D a_519_n392# w_444_n378# pfet w=40 l=2
++  ad=0 pd=0 as=160 ps=88
+M1009 a_519_n392# clk a_501_n395# w_444_n378# pfet w=40 l=2
++  ad=0 pd=0 as=200 ps=90
+M1010 VDD a_501_n395# a_497_n392# w_444_n378# pfet w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1011 VDD a_455_n375# Q w_444_n378# pfet w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+C0 a_455_n375# Q 0.17fF
+C1 gnd a_475_n340# 0.01fF
+C2 Q D 0.06fF
+C3 a_479_n375# VDD 0.08fF
+C4 VDD a_519_n392# 0.01fF
+C5 w_444_n378# Q 0.14fF
+C6 clk a_479_n375# 0.33fF
+C7 a_451_n340# gnd 0.01fF
+C8 clk VDD 0.19fF
+C9 a_501_n395# VDD 0.08fF
+C10 w_444_n378# a_455_n375# 0.11fF
+C11 w_444_n378# D 0.20fF
+C12 clk a_501_n395# 0.03fF
+C13 a_479_n375# gnd 0.06fF
+C14 a_479_n375# Q 0.12fF
+C15 clk gnd 0.52fF
+C16 Q VDD 0.69fF
+C17 gnd a_501_n395# 0.04fF
+C18 VDD a_497_n392# 0.01fF
+C19 Q a_519_n392# 0.01fF
+C20 clk Q 0.19fF
+C21 Q a_501_n395# 0.12fF
+C22 a_455_n375# VDD 0.09fF
+C23 D VDD 0.06fF
+C24 w_444_n378# a_479_n375# 0.12fF
+C25 clk a_455_n375# 0.09fF
+C26 w_444_n378# VDD 0.12fF
+C27 Q gnd 0.02fF
+C28 clk D 0.61fF
+C29 a_501_n395# D 0.05fF
+C30 w_444_n378# clk 0.37fF
+C31 a_455_n375# gnd 0.08fF
+C32 w_444_n378# a_501_n395# 0.09fF
+C33 Q a_497_n392# 0.01fF
+C34 gnd D 0.02fF
+C35 VDD Gnd 0.03fF
+C36 D Gnd 0.09fF
+C37 a_501_n395# Gnd 0.15fF
+C38 gnd Gnd 0.18fF
+C39 Q Gnd 0.09fF
+C40 a_479_n375# Gnd 0.10fF
+C41 a_455_n375# Gnd 0.15fF
+C42 clk Gnd 0.85fF
+C43 w_444_n378# Gnd 4.00fF
