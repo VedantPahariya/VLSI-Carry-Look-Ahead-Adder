@@ -1,0 +1,80 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from TSPC2.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 VDD a_363_n545# a_341_n545# w_330_n548# CMOSP w=20 l=2
++  ad=600 pd=280 as=100 ps=50
+M1001 gnd a_385_n565# a_363_n545# Gnd CMOSN w=10 l=2
++  ad=300 pd=160 as=50 ps=30
+M1002 VDD a_341_n545# Q w_330_n548# CMOSP w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1003 gnd a_363_n545# a_359_n510# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=80 ps=48
+M1004 a_359_n510# clk a_341_n545# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1005 gnd a_341_n545# a_337_n510# Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=80 ps=48
+M1006 a_337_n510# clk Q Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=100 ps=50
+M1007 gnd D a_385_n565# Gnd CMOSN w=10 l=2
++  ad=0 pd=0 as=50 ps=30
+M1008 VDD a_385_n565# a_381_n562# w_330_n548# CMOSP w=40 l=2
++  ad=0 pd=0 as=160 ps=88
+M1009 a_381_n562# clk a_363_n545# w_330_n548# CMOSP w=40 l=2
++  ad=0 pd=0 as=200 ps=90
+M1010 a_403_n562# clk a_385_n565# w_330_n548# CMOSP w=40 l=2
++  ad=160 pd=88 as=200 ps=90
+M1011 VDD D a_403_n562# w_330_n548# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+C0 VDD w_330_n548# 0.08fF
+C1 w_330_n548# Q 0.03fF
+C2 gnd a_363_n545# 0.06fF
+C3 D VDD 0.06fF
+C4 a_359_n510# gnd 0.01fF
+C5 VDD a_403_n562# 0.01fF
+C6 gnd D 0.04fF
+C7 clk a_363_n545# 0.33fF
+C8 VDD a_341_n545# 0.02fF
+C9 w_330_n548# clk 0.45fF
+C10 VDD a_385_n565# 0.08fF
+C11 D clk 0.03fF
+C12 w_330_n548# a_363_n545# 0.09fF
+C13 gnd a_341_n545# 0.02fF
+C14 gnd a_385_n565# 0.04fF
+C15 D w_330_n548# 0.06fF
+C16 clk a_341_n545# 0.09fF
+C17 a_385_n565# clk 0.03fF
+C18 VDD clk 0.21fF
+C19 VDD a_381_n562# 0.01fF
+C20 w_330_n548# a_341_n545# 0.11fF
+C21 VDD a_363_n545# 0.08fF
+C22 w_330_n548# a_385_n565# 0.09fF
+C23 gnd clk 0.36fF
+C24 VDD Gnd 0.00fF
+C25 D Gnd 0.12fF
+C26 a_385_n565# Gnd 0.16fF
+C27 gnd Gnd 0.16fF
+C28 Q Gnd 0.05fF
+C29 a_363_n545# Gnd 0.13fF
+C30 a_341_n545# Gnd 0.11fF
+C31 clk Gnd 0.79fF
+C32 w_330_n548# Gnd 3.78fF
+
+V3 D gnd 'SUPPLY'
+.ic V(Q) =0
+
+.tran 0.1n 100n
+V1 clk gnd PULSE 0 'SUPPLY' 30n 50p 50p 30n 60n
+* V2 D gnd PULSE 0 'SUPPLY' 0 50p 50p 1.75n 3.5n
+
+.control
+run
+plot V(Q) V(clk)+3 V(D)+6
+.endc

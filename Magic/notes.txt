@@ -1,0 +1,74 @@
+
+.tran 1n 100n
+.ic V(A_0) =0
+.ic V(A_1) =0
+.ic V(A_2) =0
+.ic V(A_3) =0
+
+.ic V(B_0) =0
+.ic V(B_1) =0
+.ic V(B_2) =0
+.ic V(B_3) =0
+
+.ic V(C0) =0
+
+* 'SUPPLY'
+
+* V1 A0 gnd 'SUPPLY'
+V2 A1 gnd 0
+V3 A2 gnd 0
+V4 A3 gnd 0
+
+V5 B0 gnd 0
+V6 B1 gnd 0
+V7 B2 gnd 0
+V8 B3 gnd 0
+
+V9 C0 gnd 0
+
+* V1 A_0 gnd 0    
+* * V1 A_0 gnd 'SUPPLY'
+* V2 A_1 gnd 0
+* * V2 A_1 gnd 'SUPPLY'
+* V3 A_2 gnd 0
+* * V3 A_2 gnd 'SUPPLY'
+* V4 A_3 gnd 0
+* * V4 A_3 gnd 'SUPPLY'
+
+* V5 B_0 gnd 0
+* * V5 B_0 gnd 'SUPPLY'
+* * V6 B_1 gnd 0
+* V6 B_1 gnd 'SUPPLY'
+* * V7 B_2 gnd 0
+* V7 B_2 gnd 'SUPPLY'
+* V8 B_3 gnd 0
+* * V8 B_3 gnd 'SUPPLY'
+* * V5 B_0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
+V1 A0 gnd PULSE(0 'SUPPLY' 20ns 10ps 10ps 30ns 60ns)
+V10 clk gnd PULSE(0 'SUPPLY' 5ns 10ps 10ps 30ns 60ns)
+
+* * V9 C0 gnd 0
+* V9 C0 gnd 'SUPPLY'
+* * V10 clk gnd 'SUPPLY'
+
+* .measure tran B0_val FIND v(B_0) AT=8n
+* .measure tran S0_val FIND v(s_0) AT=8n
+* .measure tran S1_val FIND v(s_1) AT=8n
+* .measure tran S2_val FIND v(s_2) AT=8n  
+* .measure tran S3_val FIND v(s_3) AT=8n  
+* .measure tran C4_val FIND v(C4) AT=8n
+* .measure tran C0_val FIND v(C0) AT=8n
+* .measure tran C2_val FIND v(C2) AT=8n
+* .measure tran C3_val FIND v(C3) AT=8n
+* .measure tran G0_val FIND v(G0) AT=8n
+* .measure tran G2_val FIND v(G2) AT=8n
+* .measure tran P2_val FIND v(Pt2) AT=8n
+* .measure tran P21 FIND v(P21) AT=8n
+* .measure tran P10 FIND v(P10) AT=8n
+* .measure tran P1_val FIND v(Pt1) AT=8n
+* .measure tran GPG2_val FIND v(GPG2) AT=8n
+ 
+.control
+run
+plot V(S0)+3 V(S1) V(A0)-3 V(clk)-6
+.endc
