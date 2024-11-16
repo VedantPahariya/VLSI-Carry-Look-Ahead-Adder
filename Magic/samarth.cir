@@ -1,0 +1,106 @@
+.include TSMC_180nm.txt
+.param SUPPLY=1.8
+.global gnd vdd
+
+* Supply
+Vdd vdd gnd 'SUPPLY'
+
+* SPICE3 file created from samarth.ext - technology: scmos
+
+.option scale=0.09u
+
+M1000 d1 in vdd w_n11_n70# CMOSP w=40 l=2
++  ad=320 pd=96 as=800 ps=380
+M1001 int2 int1 vdd w_n6_n10# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1002 a_2_n95# in gnd Gnd CMOSN w=10 l=2
++  ad=60 pd=32 as=400 ps=220
+M1003 mid2 clk d3 Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=160 ps=56
+M1004 int1 clk d2 w_n11_n70# CMOSP w=40 l=2
++  ad=200 pd=90 as=320 ps=96
+M1005 out1 clk d4 Gnd CMOSN w=20 l=2
++  ad=100 pd=50 as=160 ps=56
+M1006 out out1 vdd w_63_n31# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1007 a_2_n95# clk d1 w_n11_n70# CMOSP w=40 l=2
++  ad=200 pd=90 as=0 ps=0
+M1008 int2 int1 gnd Gnd CMOSN w=10 l=2
++  ad=50 pd=30 as=0 ps=0
+M1009 d3 int2 gnd Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1010 out out1 gnd Gnd CMOSN w=10 l=2
++  ad=50 pd=30 as=0 ps=0
+M1011 d4 mid2 gnd Gnd CMOSN w=20 l=2
++  ad=0 pd=0 as=0 ps=0
+M1012 d2 a_2_n95# vdd w_n11_n70# CMOSP w=40 l=2
++  ad=0 pd=0 as=0 ps=0
+M1013 int1 a_2_n95# gnd Gnd CMOSN w=10 l=2
++  ad=60 pd=32 as=0 ps=0
+M1014 mid2 int2 vdd w_n11_n70# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+M1015 out1 mid2 vdd w_75_n70# CMOSP w=20 l=2
++  ad=100 pd=50 as=0 ps=0
+C0 out1 out 0.05fF
+C1 w_n6_n10# int1 0.07fF
+C2 mid2 w_75_n70# 0.07fF
+C3 gnd int2 0.05fF
+C4 mid2 w_n11_n70# 0.02fF
+C5 vdd int2 0.05fF
+C6 vdd d2 0.11fF
+C7 int1 int2 0.13fF
+C8 gnd int1 0.09fF
+C9 int1 d2 0.14fF
+C10 gnd d4 0.10fF
+C11 w_63_n31# out 0.02fF
+C12 in a_2_n95# 0.04fF
+C13 int1 vdd 0.07fF
+C14 d1 a_2_n95# 0.15fF
+C15 clk a_2_n95# 0.06fF
+C16 gnd clk 1.53fF
+C17 clk int1 0.06fF
+C18 gnd out1 0.50fF
+C19 gnd d3 0.10fF
+C20 int2 w_n11_n70# 0.11fF
+C21 w_n11_n70# a_2_n95# 0.09fF
+C22 vdd w_75_n70# 0.02fF
+C23 d2 w_n11_n70# 0.02fF
+C24 w_63_n31# vdd 0.02fF
+C25 vdd w_n11_n70# 0.08fF
+C26 int1 w_n11_n70# 0.05fF
+C27 in w_n11_n70# 0.06fF
+C28 w_n11_n70# d1 0.02fF
+C29 gnd out 0.08fF
+C30 clk w_n11_n70# 0.13fF
+C31 out1 w_75_n70# 0.02fF
+C32 w_63_n31# out1 0.07fF
+C33 w_n6_n10# int2 0.02fF
+C34 w_n6_n10# vdd 0.02fF
+C35 d4 Gnd 0.01fF
+C36 d3 Gnd 0.01fF
+C37 mid2 Gnd 0.05fF
+C38 d2 Gnd 0.00fF
+C39 d1 Gnd 0.01fF
+C40 a_2_n95# Gnd 0.24fF
+C41 clk Gnd 1.39fF
+C42 in Gnd 0.17fF
+C43 gnd Gnd 0.27fF
+C44 vdd Gnd 0.04fF
+C45 int1 Gnd 0.26fF
+C46 int2 Gnd 0.37fF
+C47 w_75_n70# Gnd 0.77fF
+C48 w_63_n31# Gnd 0.14fF
+C49 w_n11_n70# Gnd 3.86fF
+C50 w_n6_n10# Gnd 0.77fF
+
+V3 in gnd 'SUPPLY'
+.ic V(out) =0
+
+.tran 0.1n 100n
+V1 clk gnd PULSE 0 'SUPPLY' 30n 50p 50p 30n 60n
+* V2 D gnd PULSE 0 'SUPPLY' 0 50p 50p 1.75n 3.5n
+
+.control
+run
+plot V(out) V(clk)+3 V(in)+6
+.endc
