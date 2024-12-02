@@ -45,15 +45,15 @@
     x2 B com clk vdd gnd low_latch
 
     * Complete High Level Latch
-    x3 com A clk vdd gnd high_latch
-    x4 A Q clk vdd gnd high_latch
+    x3 temp A clk vdd gnd high_latch
+    x4 A nt clk vdd gnd high_latch
 
     * Repeater at the output
     * x5 Qbar nt clk vdd gnd inv
     * x6 Q Qbar clk vdd gnd inv
 
     * one at mid and one at output
-    * x5 temp com clk vdd gnd inv
-    * x6 Q nt clk vdd gnd inv
+    x5 temp com clk vdd gnd inv
+    x6 Q nt clk vdd gnd inv
     * just replace temp with com to convert into inverters at output
 .ends

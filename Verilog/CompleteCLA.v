@@ -75,7 +75,7 @@ module CLA4bit(
     AndOr ao2(P21, GPG2, C1, C3);
 
     // Sum calculation
-    xor(Sum_wire[0], Cin, P[0]);
+    xor(Sum_wire[0], Cin_reg, P[0]);
     xor(Sum_wire[1], C1, P[1]);
     xor(Sum_wire[2], C2, P[2]);
     xor(Sum_wire[3], C3, P[3]);

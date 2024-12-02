@@ -83,15 +83,6 @@ Vdd vdd gnd 'SUPPLY'
     x3 com A clk vdd gnd high_latch
     x4 A Q clk vdd gnd high_latch
 
-    * Repeater at the output
-    * x5 Qbar nt clk vdd gnd inv
-    * x6 Q Qbar clk vdd gnd inv
-
-    * one at mid and one at output
-    * x5 temp com clk vdd gnd inv
-    * x6 Q nt clk vdd gnd inv
-    * just replace temp with com to convert into inverters at output
-
     * Output Load
     x7 tem1 Q vdd gnd inverter
     * x8 tem1 Q vdd gnd inv
@@ -116,18 +107,17 @@ vin D gnd pulse 0 1.8 0.2ns 50ps 50ps 2ns 4ns
 + TRIG v(clk) VAL='SUPPLY/2' RISE=3
 + TARG v(Q) VAL='SUPPLY/2' FALL=1
 
-.measure tran tpd3 param='(rise_delay + fall_delay)/2'
+.measure tran propogation_delay param='(rise_delay + fall_delay)/2'
 
-.measure tran 
 .control
-set color0= black
-set color1= white
-set color2= red
-set color3= magenta
-set color4= green
+set color0= white
+set color1= black
+set color2= brown
+set color3= red
+set color4= blue
 set xbrushwidth=3
 
 run
-plot v(clk)+6 v(D)+3 v(Q) title "Output Q"
+plot v(Q)+6 v(clk)+3 v(D)  title "Output Q"
 .endc
 

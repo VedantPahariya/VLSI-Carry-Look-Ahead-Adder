@@ -286,24 +286,35 @@ X22 S2 s_2 clk Dflip
 X23 S3 s_3 clk Dflip
 X24 Cout C4 clk Dflip
 
-.tran 0.1ns 20ns
+.tran 0.5ns 200ns
 
-V1 A0 gnd 'SUPPLY'
-V2 A1 gnd 0
-V3 A2 gnd 'SUPPLY'
-V4 A3 gnd 0
-* V4 A3 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
+* V1 A0 gnd 'SUPPLY'
+* V2 A1 gnd 0
+* V3 A2 gnd 'SUPPLY'
+* V4 A3 gnd 0
+* * V4 A3 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
 
-.param time = 10ns
-* V5 B0 gnd PULSE 0 'SUPPLY' 0ns 50ps 50ps 'time' '2*time'
-V5 B0 gnd 'SUPPLY'
-* V6 B1 gnd 'SUPPLY'
-V6 B1 gnd 0
-V7 B2 gnd 'SUPPLY'
-* V7 B2 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
-V8 B3 gnd 0
+.param time = 8ns
+* * V5 B0 gnd PULSE 0 'SUPPLY' 0ns 50ps 50ps 'time' '2*time'
+* V5 B0 gnd 'SUPPLY'
+* * V6 B1 gnd 'SUPPLY'
+* V6 B1 gnd 0
+* V7 B2 gnd 'SUPPLY'
+* * V7 B2 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
+* V8 B3 gnd 0
 
-V9 Cin gnd 'SUPPLY'
+V1 A0 gnd PULSE(0 'SUPPLY' 10ns 50ps 50ps 20ns 40ns)
+V2 A1 gnd PULSE(0 'SUPPLY' 15ns 50ps 50ps 25ns 50ns)
+V3 A2 gnd PULSE(0 'SUPPLY' 20ns 50ps 50ps 30ns 60ns)
+V4 A3 gnd PULSE(0 'SUPPLY' 25ns 50ps 50ps 35ns 70ns)
+
+V5 B0 gnd PULSE(0 'SUPPLY' 12ns 50ps 50ps 22ns 44ns)
+V6 B1 gnd PULSE(0 'SUPPLY' 18ns 50ps 50ps 28ns 56ns)
+V7 B2 gnd PULSE(0 'SUPPLY' 24ns 50ps 50ps 34ns 68ns)
+V8 B3 gnd PULSE(0 'SUPPLY' 30ns 50ps 50ps 40ns 80ns)
+
+* V9 Cin gnd 'SUPPLY'
+V9 Cin gnd PULSE(0 'SUPPLY' 36ns 50ps 50ps 44ns 88ns)
 V10 clk gnd PULSE 0 'SUPPLY' 5n 50ps 50ps 'time/2' 'time'
 
 
@@ -335,4 +346,7 @@ run
 * plot V(clk)+6 V(B0)+3 V(S3)
 * plot V(clk)
 * plot V(clk)+28 V(A3)+26 V(A2)+24 V(A1)+22 V(A0)+20 V(B3)+18 V(B2)+16 V(B1)+14 V(B0)+12 V(Cin)+10 V(Cout)+8 V(S3)+6 V(S2)+4 V(S1)+2 V(S0) 
+plot V(A0) V(A1)+3 V(A2)+6 V(A3)+9 V(Cin)+12
+plot V(B0) V(B1)+3 V(B2)+6 V(B3)+9 V(clk)+12
+plot V(S0) V(S1)+3 V(S2)+6 V(S3)+9 V(Cout)+12
 .endc

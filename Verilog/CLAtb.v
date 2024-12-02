@@ -1,5 +1,5 @@
 `timescale 1ns/1ns
-`include "CLA.v"
+`include "CompleteCLA.v"
 
 module CLAtb;
     // Test inputs

@@ -1,20 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Mon Nov 18 15:44:32 2024
+[*] Mon Dec 02 20:38:30 2024
 [*]
 [dumpfile] "C:\Users\pahar\OneDrive - International Institute of Information Technology\24-25 monsoon\VLSI\Project\VLSI-Carry-Look-Ahead-Adder\Verilog\cla_test.vcd"
-[dumpfile_mtime] "Mon Nov 18 14:12:37 2024"
-[dumpfile_size] 9267
+[dumpfile_mtime] "Mon Dec 02 19:18:36 2024"
+[dumpfile_size] 10027
 [savefile] "C:\Users\pahar\OneDrive - International Institute of Information Technology\24-25 monsoon\VLSI\Project\VLSI-Carry-Look-Ahead-Adder\Verilog\ClockedCLA.gtkw"
-[timestart] 0
+[timestart] 17
 [size] 1536 793
 [pos] -1 -1
-*-3.371484 138 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[sst_width] 197
-[signals_width] 78
-[sst_expanded] 1
+*-5.371484 86 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] CLAtb.cla_inst.
+[sst_width] 42
+[signals_width] 94
+[sst_expanded] 0
 [sst_vpaned_height] 221
-@c00420
+@800024
 [color] 2
 CLAtb.A[3:0]
 @28
@@ -26,33 +27,49 @@ CLAtb.A[3:0]
 (2)CLAtb.A[3:0]
 [color] 2
 (3)CLAtb.A[3:0]
-@1401200
+@1001200
 -group_end
 @200
 -
-@420
+@800024
 [color] 5
 CLAtb.B[3:0]
+@28
+[color] 5
+(0)CLAtb.B[3:0]
+[color] 5
+(1)CLAtb.B[3:0]
+[color] 5
+(2)CLAtb.B[3:0]
+[color] 5
+(3)CLAtb.B[3:0]
+@1001200
+-group_end
 @200
 -
-@421
+@28
+CLAtb.Cin
+@200
+-
+@420
 [color] 7
 CLAtb.Cout
 @200
 -
-@c00420
-[color] 3
+@800024
+[color] 4
 CLAtb.S[3:0]
 @28
 (0)CLAtb.S[3:0]
 (1)CLAtb.S[3:0]
 (2)CLAtb.S[3:0]
 (3)CLAtb.S[3:0]
-@1401200
+@1001200
 -group_end
 @200
 -
 @28
+[color] 1
 CLAtb.clk
 [pattern_trace] 1
 [pattern_trace] 0

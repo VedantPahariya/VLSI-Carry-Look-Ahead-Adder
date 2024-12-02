@@ -266,18 +266,34 @@ X19 C4 temp2 Gout NAND
 
 .tran 1ns 100ns
 * Test with worst case scenario
-V1 A0 gnd 0
-V2 A1 gnd 0
-V3 A2 gnd 0
-V4 A3 gnd 0
+* V1 A0 gnd 0
+* V1 A0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
+* * V2 A1 gnd 0
+* V2 A1 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
+* * V3 A2 gnd 0
+* V3 A2 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
+* * V4 A3 gnd 0
+* V4 A3 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
 
-V5 B0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
-* V5 B0 gnd 'SUPPLY'
-V6 B1 gnd 'SUPPLY'
+* * V5 B0 gnd 'SUPPLY'
+* V5 B0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
+* * V6 B1 gnd 'SUPPLY'
 * V6 B1 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
-V7 B2 gnd 'SUPPLY'
+* * V7 B2 gnd 'SUPPLY'
 * V7 B2 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
-V8 B3 gnd 'SUPPLY'
+* * V8 B3 gnd 'SUPPLY'
+* V8 B3 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
+
+* Random input pulses
+V1 A0 gnd PULSE(0 'SUPPLY' 10ns 50ps 50ps 20ns 40ns)
+V2 A1 gnd PULSE(0 'SUPPLY' 15ns 50ps 50ps 25ns 50ns)
+V3 A2 gnd PULSE(0 'SUPPLY' 20ns 50ps 50ps 30ns 60ns)
+V4 A3 gnd PULSE(0 'SUPPLY' 25ns 50ps 50ps 35ns 70ns)
+
+V5 B0 gnd PULSE(0 'SUPPLY' 12ns 50ps 50ps 22ns 44ns)
+V6 B1 gnd PULSE(0 'SUPPLY' 18ns 50ps 50ps 28ns 56ns)
+V7 B2 gnd PULSE(0 'SUPPLY' 24ns 50ps 50ps 34ns 68ns)
+V8 B3 gnd PULSE(0 'SUPPLY' 30ns 50ps 50ps 40ns 80ns)
 
 V9 Cin gnd 'SUPPLY'
 
@@ -297,8 +313,14 @@ set color1= black
 set color2= red
 set color3= blue
 set color4= magenta
+set color5= green
+* set color6= cyan
+* set color7= yellow
+set color6= orange
 set xbrushwidth=3
 
 run
-plot V(B0)+3 V(S3)
+plot V(A0) V(A1)+3 V(A2)+6 V(A3)+9
+plot V(B0) V(B1)+3 V(B2)+6 V(B3)+9
+plot V(S0) V(S1)+3 V(S2)+6 V(S3)+9 V(C4)+12
 .endc
