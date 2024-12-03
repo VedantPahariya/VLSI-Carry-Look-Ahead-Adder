@@ -264,46 +264,46 @@ X17 Pout P32 P10 NAND
 X18 temp2 Pout Cinbar OR
 X19 C4 temp2 Gout NAND
 
-.tran 1ns 100ns
+.tran 0.1ns 100ns
 * Test with worst case scenario
-* V1 A0 gnd 0
+V1 A0 gnd 0
 * V1 A0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
-* * V2 A1 gnd 0
+V2 A1 gnd 0
 * V2 A1 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
-* * V3 A2 gnd 0
+V3 A2 gnd 0
 * V3 A2 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
-* * V4 A3 gnd 0
+V4 A3 gnd 0
 * V4 A3 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
 
-* * V5 B0 gnd 'SUPPLY'
-* V5 B0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
-* * V6 B1 gnd 'SUPPLY'
+* V5 B0 gnd 'SUPPLY'
+V5 B0 gnd PULSE(0 'SUPPLY' 50ns 50ps 50ps 30ns 60ns)
+V6 B1 gnd 'SUPPLY'
 * V6 B1 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
-* * V7 B2 gnd 'SUPPLY'
+V7 B2 gnd 'SUPPLY'
 * V7 B2 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
-* * V8 B3 gnd 'SUPPLY'
+V8 B3 gnd 0
 * V8 B3 gnd PULSE(0 'SUPPLY' 50ns 10ps 10ps 30ns 60ns)
 
 * Random input pulses
-V1 A0 gnd PULSE(0 'SUPPLY' 10ns 50ps 50ps 20ns 40ns)
-V2 A1 gnd PULSE(0 'SUPPLY' 15ns 50ps 50ps 25ns 50ns)
-V3 A2 gnd PULSE(0 'SUPPLY' 20ns 50ps 50ps 30ns 60ns)
-V4 A3 gnd PULSE(0 'SUPPLY' 25ns 50ps 50ps 35ns 70ns)
+* V1 A0 gnd PULSE(0 'SUPPLY' 10ns 50ps 50ps 20ns 40ns)
+* V2 A1 gnd PULSE(0 'SUPPLY' 15ns 50ps 50ps 25ns 50ns)
+* V3 A2 gnd PULSE(0 'SUPPLY' 20ns 50ps 50ps 30ns 60ns)
+* V4 A3 gnd PULSE(0 'SUPPLY' 25ns 50ps 50ps 35ns 70ns)
 
-V5 B0 gnd PULSE(0 'SUPPLY' 12ns 50ps 50ps 22ns 44ns)
-V6 B1 gnd PULSE(0 'SUPPLY' 18ns 50ps 50ps 28ns 56ns)
-V7 B2 gnd PULSE(0 'SUPPLY' 24ns 50ps 50ps 34ns 68ns)
-V8 B3 gnd PULSE(0 'SUPPLY' 30ns 50ps 50ps 40ns 80ns)
+* V5 B0 gnd PULSE(0 'SUPPLY' 12ns 50ps 50ps 22ns 44ns)
+* V6 B1 gnd PULSE(0 'SUPPLY' 18ns 50ps 50ps 28ns 56ns)
+* V7 B2 gnd PULSE(0 'SUPPLY' 24ns 50ps 50ps 34ns 68ns)
+* V8 B3 gnd PULSE(0 'SUPPLY' 30ns 50ps 50ps 40ns 80ns)
 
 V9 Cin gnd 'SUPPLY'
 
 .measure tran rise_delay
 + TRIG v(B0) VAL='SUPPLY/2' RISE=1
-+ TARG v(S3) VAL='SUPPLY/2' FALL=1
++ TARG v(S3) VAL='SUPPLY/2' RISE=1
 
 .measure tran fall_delay
 + TRIG v(B0) VAL='SUPPLY/2' FALL=1
-+ TARG v(S3) VAL='SUPPLY/2' RISE=1
++ TARG v(S3) VAL='SUPPLY/2' FALL=1
 
 .measure tran tpd3 param='(rise_delay + fall_delay)/2'
 

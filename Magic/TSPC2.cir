@@ -67,15 +67,33 @@ C30 clk Gnd 0.36fF
 C31 D Gnd 0.12fF
 C32 w_323_n542# Gnd 3.94fF
 
-V3 D gnd 'SUPPLY'
-.ic V(Q) =0
-.ic V(mid) =0
+* Clock Pulse
+vclk clk gnd pulse 0 1.8 0ns 50ps 50ps 1ns 2ns
 
-.tran 0.1n 100n
-V1 clk gnd PULSE 'SUPPLY' 0 30n 50p 50p 30n 60n
-* V2 D gnd PULSE 0 'SUPPLY' 0 50p 50p 1.75n 3.5n
+* Input Pulse D
+vin D gnd pulse 0 1.8 0.2ns 50ps 50ps 2ns 4ns
+* initial voltage, peak volt, delay, rise time, fall time, pulse width, period
+
+.tran 0.01ns 15ns
+
+.measure tran rise_delay
++ TRIG v(clk) VAL='SUPPLY/2' RISE=2
++ TARG v(Q) VAL='SUPPLY/2' RISE=1
+
+.measure tran fall_delay
++ TRIG v(clk) VAL='SUPPLY/2' RISE=3
++ TARG v(Q) VAL='SUPPLY/2' FALL=2
+
+.measure tran propogation_delay param='(rise_delay + fall_delay)/2'
 
 .control
+set color0= white
+set color1= black
+set color2= brown
+set color3= red
+set color4= blue
+set xbrushwidth=3
+
 run
-plot V(Q) V(clk)+3 V(D)+6 V(mid)+9
+plot v(Q)+6 v(clk)+3 v(D)  title "Output Q"
 .endc

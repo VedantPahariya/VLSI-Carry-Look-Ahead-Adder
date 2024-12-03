@@ -155,7 +155,7 @@ where $G'_i$ and $P'_i$ are the modified Generate and Propagate signals for the 
 
 \subsection{Topology and Sizing of Each Block}
 \noindent
-Based on the equations and logic functions derived above, the topology of the 4-bit CLA design can be implemented as shown in the figure below. The design is implemented in 180nm technology. The sizing of the transistors in each block is done considering the speed and power consumption of the design. I have followed the CMOS logic for all the logic gates except XOR. For XOR, I used Pass Transistor Logic because it uses less no. of transistors. Here, I implemented the method of logical effort for sizing each block as following:
+Based on the equations and logic functions derived above, the topology of the 4-bit CLA design can be implemented as shown in the figure below. The design is implemented in 180nm technology. The sizing of the transistors in each block is done considering the speed of the design. I have followed the CMOS logic for all the logic gates except XOR. For XOR, I used Pass Transistor Logic because it uses less no. of transistors. Here, I implemented the method of logical effort for sizing each block as following:
 
 \begin{figure}[H]
     \centering
@@ -267,7 +267,7 @@ It is implemented using the True Single Phase Clocked (TSPC) technology. It incl
     \label{tab:dff_sizing}
 \end{table}
 
-\section{Delay Characteristics of D-Flip Flop}
+\section{Delay Characteristics of D-Flip Flop (Prelayout)}
 The TSPC D Flip-Flop was simulated using NGSPICE with a clock period of 2ns and input period of 4ns. Both clock and input signals were given sharp rise/fall times of 50ps to analyze the flip-flop's delay characteristics.
 
 \subsection{Clock to Q Delay }
@@ -365,6 +365,15 @@ Hold time ($t_{hold}$) is the minimum time after the active clock edge during wh
     \label{fig:nand}
 \end{figure}
 
+\subsection{XOR Gate}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{example-image-a.png}
+    \caption{XOR Gate Stick Diagram}
+    \label{fig:xor}
+\end{figure}
+
+
 % \section{Prelayout Full Circuit Analysis}
 
 \section{Prelayout Simulation Results \& Analysis of CLA}
@@ -404,10 +413,21 @@ The simulation produces the following outputs:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\linewidth]{example-image-a.png}
-    \caption{Simulation Waveforms of 4-bit CLA}
+    \includegraphics[width=1\linewidth]{claprengspi.png}
+    \caption{Input Waveform}
     \label{fig:cla_waveform}
 \end{figure}
+
+Above plots show the input waveforms given to the 4-bit CLA. The left plot shows the A bits along with $C_{in}$ and right one shows the B bits along with the clock.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{claprengspi2.png}
+    \caption{Output Waveform}
+    \label{fig:cla_terminal}
+\end{figure}
+
+Above plot shows the output waveforms which includes the four Sum bits and the final Carry bit.
 
 The waveforms demonstrate correct operation of the CLA with proper carry propagation and sum generation across all bit positions. The progressive delays in input signals help verify the adder's functionality under varying timing conditions.
 
@@ -461,22 +481,119 @@ The maximum clock speed of the 4-bit CLA design can be calculated using the foll
     \end{equation}
 
 \subsubsection{Found using Simulation}
+Using the Ngspice Simulation, I found that the maximum clock frequency of the 4-bit CLA design is 1.04 GHz which is less than the theoritical value. This difference can be attributed to the following factors:
+\begin{itemize}
+    \item Parasitic Capacitances: The simulation does not consider the parasitic capacitances which can affect the delay and hence the maximum clock frequency.
+    \item Wire Delays: The simulation does not consider the wire delays which can affect the delay and hence the maximum clock frequency.
+\end{itemize}
 
+\section{Delay Characteristics of D-Flip Flop (Postlayout)}
+The TSPC D Flip-Flop was simulated using NGSPICE with a clock period of 2ns and input period of 4ns. Both clock and input signals were given sharp rise/fall times of 50ps to analyze the flip-flop's delay characteristics.
 
+\subsection{Clock to Q Delay }
+Upon simulating, we observe the following waveforms and terminal outputs:
 
-\subsection{Maximum Power Consumption of CLA Adder Block}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=1\linewidth]{dflippostsetup.png}
+%     \caption{Waveforms Output of D-Flip Flop}
+%     \label{fig:dff_delay}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=1\linewidth]{dflippostsetupterm.png}
+%     \caption{Terminal Output for Delay}
+%     \label{fig:dff_power}
+% \end{figure}
+
+The simulation gives the following timing parameters:
+\begin{itemize}
+    \item Rise Delay: 92.21ps - Time taken for the output to rise after the triggering clock edge
+    \item Fall Delay: 24.09ps - Time taken for the output to fall after the triggering clock edge  
+    \item Average Propagation Delay: 53.15ps - Mean of rise and fall delays
+    \item Setup Time: 87.65ps - Minimum time before the active clock edge during which the data input must remain stable
+    \item Hold Time: 0ps - Minimum time after the active clock edge during which the data input must remain stable
+\end{itemize}
+
 
 \section{Post-Layout Simulation Results \& Analysis of CLA}
+The 4-bit CLA desgign layout was implemented in 180nm technology in magic as shown in the figure below. The layout was then extracted and simulated using NGSPICE with the same test conditions as the pre-layout simulation.
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{clapostmag.png}
+    \caption{Magic Layout of 4-bit CLA Design}
+    \label{fig:layout}
+\end{figure*}
 
 \subsection{Verification of functionality}
+The input and output specifications are same as mentioned previously in the prelayout simulation. 
+The post-layout simulation produces the following outputs:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{clapostngspi2.png}
+    \caption{Input Waveform}
+    \label{fig:cla_waveform}
+\end{figure}
+
+The intial outputs are different from the prelayout simulation because of the initial conditions of the flip-flops. After few clock cycles, the outputs stabilize and matches exactly with the prelayout simulation hence the correct operation of the CLA is verified.
 
 \subsection{Worst Case Delay of CLA Adder Block}
+The worst case delay of the post-layout 4-bit CLA design is calculated using the same inputs as in the pre-layout simulation. The simulation results for the worst case delay are as follows:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{clapostworst.png}
+    \caption{WaveForms for the Worst Case Delay}
+    \label{fig:worst_case_delay}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{clapostworstterm.png}
+    \caption{Worst Case Delay Terminal Output}
+    \label{fig:worst_case_delay}
+\end{figure}
+
+The simulation results show that the worst case delay for the post-layout 4-bit CLA design is 1112.62ps. This delay is observed in the carry propagation path from $B_0$ through C3 to S3.
 
 \subsection{Maximum Clock Speed}
+The maximum clock speed of the post-layout 4-bit CLA design is calculated using the same method as in the pre-layout simulation. Given the values we calculated earlier:
+\begin{itemize}
+    \item $t_{CQ_1} = 61.17 \text{ ps}$
+    \item $t_{pd} = 1112.62 \text{ ps}$
+    \item $t_{su} = 87.65 \text{ ps}$
+\end{itemize}
 
-\subsection{Maximum Power Consumption of CLA Adder Block}
+The maximum clock frequency is:
+\begin{equation}
+    f_{max} = \frac{1}{61.17 \text{ ps} + 1112.62 \text{ ps} + 87.65 \text{ ps}} \approx 0.78 \text{ GHz}
+\end{equation}
+
+% comparison table between pre and post layout simulation results
+\begin{table}[H]
+    \centering
+    \caption{Comparison of Pre and Post Layout Simulation Results}
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \rowcolor{cyan!10}
+    \textbf{Parameter} & \textbf{Pre-Layout} & \textbf{Post-Layout} \\ \hline
+    Worst Case Delay (ps) & 479.16 & 1112.62 \\ \hline
+    Maximum Clock Frequency (GHz) & 1.59 & 0.78 \\ \hline
+    \end{tabular}
+    \label{tab:comparison}
+\end{table}
 
 \section{Floor Plan for Complete Circuit Layout}
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{example-image-a.png}
+    \caption{Floor Plan for Complete Circuit Layout}
+    \label{fig:floorplan}
+\end{figure*}
 
 \section{Verilog HDL Simulation Results}
 
@@ -487,124 +604,29 @@ The maximum clock speed of the 4-bit CLA design can be calculated using the foll
     \label{fig:verilog_waveform}
 \end{figure*}
 
-\subsection{Abbreviations and Acronyms}\label{AA}
-Define abbreviations and acronyms the first time they are used in the text, 
-even after they have been defined in the abstract. Abbreviations such as 
-IEEE, SI, MKS, CGS, ac, dc, and rms do not have to be defined. Do not use 
-abbreviations in the title or heads unless they are unavoidable.
+\section{Implementaion on FPGA board and oscilloscope}
 
-\subsection{Units}
-\begin{itemize}
-\item Use either SI (MKS) or CGS as primary units. (SI units are encouraged.) English units may be used as secondary units (in parentheses). An exception would be the use of English units as identifiers in trade, such as ``3.5-inch disk drive''.
-\item Avoid combining SI and CGS units, such as current in amperes and magnetic field in oersteds. This often leads to confusion because equations do not balance dimensionally. If you must use mixed units, clearly state the units for each quantity that you use in an equation.
-\item Do not mix complete spellings and abbreviations of units: ``Wb/m\textsuperscript{2}'' or ``webers per square meter'', not ``webers/m\textsuperscript{2}''. Spell out units when they appear in text: ``. . . a few henries'', not ``. . . a few H''.
-\item Use a zero before decimal points: ``0.25'', not ``.25''. Use ``cm\textsuperscript{3}'', not ``cc''.
-\end{itemize}
+% \begin{figure*}[h]
+%     \centering
+%     \includegraphics[width=1\linewidth]{oscillo1.png}
+%     \caption{FPGA Implementation of 4-bit CLA}
+%     \label{fig:fpga}
+% \end{figure*}
 
-\subsection{Equations}
-Number equations consecutively. To make your 
-equations more compact, you may use the solidus (~/~), the exp function, or 
-appropriate exponents. Italicize Roman symbols for quantities and variables, 
-but not Greek symbols. Use a long dash rather than a hyphen for a minus 
-sign. Punctuate equations with commas or periods when they are part of a 
-sentence, as in:
-\begin{equation}
-a+b=\gamma\label{eq}
-\end{equation}
+% \begin{figure*}[h]
+%     \centering
+%     \includegraphics[width=1\linewidth]{oscillo2.png}
+%     \caption{Oscilloscope Output of 4-bit CLA}
+%     \label{fig:oscilloscope}
+% \end{figure*}
 
-Be sure that the 
-symbols in your equation have been defined before or immediately following 
-the equation. Use ``\eqref{eq}'', not ``Eq.~\eqref{eq}'' or ``equation \eqref{eq}'', except at 
-the beginning of a sentence: ``Equation \eqref{eq} is . . .''
+% \begin{figure*}[h]
+%     \centering
+%     \includegraphics[width=1\linewidth]{oscillo3.png}
+%     \caption{Oscilloscope Output of 4-bit CLA}
+%     \label{fig:oscilloscope}
+% \end{figure*}
 
-\subsection{\LaTeX-Specific Advice}
-
-Please use ``soft'' (e.g., \verb|\eqref{Eq}|) cross references instead
-of ``hard'' references (e.g., \verb|(1)|). That will make it possible
-to combine sections, add equations, or change the order of figures or
-citations without having to go through the file line by line.
-
-Please don't use the \verb|{eqnarray}| equation environment. Use
-\verb|{align}| or \verb|{IEEEeqnarray}| instead. The \verb|{eqnarray}|
-environment leaves unsightly spaces around relation symbols.
-
-Please note that the \verb|{subequations}| environment in {\LaTeX}
-will increment the main equation counter even when there are no
-equation numbers displayed. If you forget that, you might write an
-article in which the equation numbers skip from (17) to (20), causing
-the copy editors to wonder if you've discovered a new method of
-counting.
-
-{\BibTeX} does not work by magic. It doesn't get the bibliographic
-data from thin air but from .bib files. If you use {\BibTeX} to produce a
-bibliography you must send the .bib files. 
-
-{\LaTeX} can't read your mind. If you assign the same label to a
-subsubsection and a table, you might find that Table I has been cross
-referenced as Table IV-B3. 
-
-{\LaTeX} does not have precognitive abilities. If you put a
-\verb|\label| command before the command that updates the counter it's
-supposed to be using, the label will pick up the last counter to be
-cross referenced instead. In particular, a \verb|\label| command
-should not go before the caption of a figure or a table.
-
-Do not use \verb|\nonumber| inside the \verb|{array}| environment. It
-will not stop equation numbers inside \verb|{array}| (there won't be
-any anyway) and it might stop a wanted equation number in the
-surrounding equation.
-
-\subsection{Some Common Mistakes}\label{SCM}
-\begin{itemize}
-\item The word ``data'' is plural, not singular.
-\item The subscript for the permeability of vacuum $\mu_{0}$, and other common scientific constants, is zero with subscript formatting, not a lowercase letter ``o''.
-\item In American English, commas, semicolons, periods, question and exclamation marks are located within quotation marks only when a complete thought or name is cited, such as a title or full quotation. When quotation marks are used, instead of a bold or italic typeface, to highlight a word or phrase, punctuation should appear outside of the quotation marks. A parenthetical phrase or statement at the end of a sentence is punctuated outside of the closing parenthesis (like this). (A parenthetical sentence is punctuated within the parentheses.)
-\item A graph within a graph is an ``inset'', not an ``insert''. The word alternatively is preferred to the word ``alternately'' (unless you really mean something that alternates).
-\item Do not use the word ``essentially'' to mean ``approximately'' or ``effectively''.
-\item In your paper title, if the words ``that uses'' can accurately replace the word ``using'', capitalize the ``u''; if not, keep using lower-cased.
-\item Be aware of the different meanings of the homophones ``affect'' and ``effect'', ``complement'' and ``compliment'', ``discreet'' and ``discrete'', ``principal'' and ``principle''.
-\item Do not confuse ``imply'' and ``infer''.
-\item The prefix ``non'' is not a word; it should be joined to the word it modifies, usually without a hyphen.
-\item There is no period after the ``et'' in the Latin abbreviation ``et al.''.
-\item The abbreviation ``i.e.'' means ``that is'', and the abbreviation ``e.g.'' means ``for example''.
-\end{itemize}
-An excellent style manual for science writers is \cite{b7}.
-
-\subsection{Authors and Affiliations}
-\textbf{The class file is designed for, but not limited to, six authors.} A 
-minimum of one author is required for all conference articles. Author names 
-should be listed starting from left to right and then moving down to the 
-next line. This is the author sequence that will be used in future citations 
-and by indexing services. Names should not be listed in columns nor group by 
-affiliation. Please keep your affiliations as succinct as possible (for 
-example, do not differentiate among departments of the same organization).
-
-\subsection{Identify the Headings}
-Headings, or heads, are organizational devices that guide the reader through 
-your paper. There are two types: component heads and text heads.
-
-Component heads identify the different components of your paper and are not 
-topically subordinate to each other. Examples include Acknowledgments and 
-References and, for these, the correct style to use is ``Heading 5''. Use 
-``figure caption'' for your Figure captions, and ``table head'' for your 
-table title. Run-in heads, such as ``Abstract'', will require you to apply a 
-style (in this case, italic) in addition to the style provided by the drop 
-down menu to differentiate the head from the text.
-
-Text heads organize the topics on a relational, hierarchical basis. For 
-example, the paper title is the primary text head because all subsequent 
-material relates and elaborates on this one topic. If there are two or more 
-sub-topics, the next level head (uppercase Roman numerals) should be used 
-and, conversely, if there are not at least two sub-topics, then no subheads 
-should be introduced.
-
-\subsection{Figures and Tables}
-\paragraph{Positioning Figures and Tables} Place figures and tables at the top and 
-bottom of columns. Avoid placing them in the middle of columns. Large 
-figures and tables may span across both columns. Figure captions should be 
-below the figures; table heads should appear above the tables. Insert 
-figures and tables after they are cited in the text. Use the abbreviation 
-``Fig.~\ref{fig}'', even at the beginning of a sentence.
 
 \begin{table}[htbp]
 \caption{Table Type Styles}
@@ -622,29 +644,6 @@ copy& More table copy$^{\mathrm{a}}$& &  \\
 \label{tab1}
 \end{center}
 \end{table}
-
-\begin{figure}[htbp]
-\centerline{\includegraphics{example-image-a}}
-\caption{Example of a figure caption.}
-\label{fig}
-\end{figure}
-
-Figure Labels: Use 8 point Times New Roman for Figure labels. Use words 
-rather than symbols or abbreviations when writing Figure axis labels to 
-avoid confusing the reader. As an example, write the quantity 
-``Magnetization'', or ``Magnetization, M'', not just ``M''. If including 
-units in the label, present them within parentheses. Do not label axes only 
-with units. In the example, write ``Magnetization (A/m)'' or ``Magnetization 
-\{A[m(1)]\}'', not just ``A/m''. Do not label axes with a ratio of 
-quantities and units. For example, write ``Temperature (K)'', not 
-``Temperature/K''.
-
-\section*{Acknowledgment}
-
-The preferred spelling of the word ``acknowledgment'' in America is without 
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B. 
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor 
-acknowledgments in the unnumbered footnote on the first page.
 
 \section*{References}
 
